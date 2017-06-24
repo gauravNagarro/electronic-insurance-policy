@@ -1,0 +1,113 @@
+configserver:
+  image: electronic-insurance-policy/config-server
+  restart: always
+
+eurekaregistry:
+  image: electronic-insurance-policy/webservice-registry
+  restart: always
+  ports:
+    - "8761:8761"
+  links:
+    - configserver
+    
+authserver:
+  image: electronic-insurance-policy/auth-server
+  restart: always
+  ports:
+    - "8899:8899"
+  links:
+    - configserver
+    
+apigateway:
+  image: electronic-insurance-policy/api-gateway
+  restart: always
+  links:
+    - eurekaregistry
+    - authserver
+    - configserver
+
+customer-web-portal:
+  image: electronic-insurance-policy/customer-web-portal
+  restart: always
+  links:
+    - eurekaregistry
+    - configserver
+
+agent-web-portal:
+  image: electronic-insurance-policy/agent-web-portal
+  restart: always
+  links:
+    - eurekaregistry
+    - configserver
+
+internal-web-portal:
+  image: electronic-insurance-policy/internal-web-portal
+  restart: always
+  links:
+    - eurekaregistry
+    - configserver
+	
+	
+customer-webservice:
+  image: electronic-insurance-policy/customer-webservice
+  restart: always
+  links:
+    - eurekaregistry
+    - authserver
+    - configserver
+
+notification-webservice:
+  image: electronic-insurance-policy/notification-webservice
+  restart: always
+  links:
+    - eurekaregistry
+    - authserver
+    - configserver
+
+insurance-policy-webservice:
+  image: electronic-insurance-policy/insurance-policy-webservice
+  restart: always
+  links:
+    - eurekaregistry
+    - authserver
+    - configserver	
+
+reporting-webservice:
+  image: electronic-insurance-policy/reporting-webservice
+  restart: always
+  links:
+    - eurekaregistry
+    - authserver
+    - configserver	
+	
+auditing-webservice:
+  image: electronic-insurance-policy/auditing-webservice
+  restart: always
+  links:
+    - eurekaregistry
+    - authserver
+    - configserver
+	
+payment-webservice:
+  image: electronic-insurance-policy/payment-webservice
+  restart: always
+  links:
+    - eurekaregistry
+    - authserver
+    - configserver	
+    
+agent-webservice:
+  image: electronic-insurance-policy/agent-webservice
+  restart: always
+  links:
+    - eurekaregistry
+    - authserver
+    - configserver
+	
+internal-webservice:
+  image: electronic-insurance-policy/internal-webservice
+  restart: always
+  links:
+    - eurekaregistry
+    - authserver
+    - configserver	
